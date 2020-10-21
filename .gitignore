@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+*.pdb
 
 # Packages #
 ############
@@ -34,4 +35,9 @@
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db
+Thumbs.
+*.cache
+*.suo
+*.cache
+*.FileListAbsolute.txt
+*.resources
