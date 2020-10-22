@@ -53,7 +53,6 @@
     <Compile Include="frmCheckoutChallenge.Designer.cs">
       <DependentUpon>frmCheckoutChallenge.cs</DependentUpon>
     </Compile>
-    <Compile Include="IScanner.cs" />
     <Compile Include="ITill.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

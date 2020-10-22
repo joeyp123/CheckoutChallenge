@@ -7,17 +7,20 @@ using System.Windows.Forms;
 
 namespace CheckoutChallenge
 {
-    public class Scanner : IScanner
+    public static class Scanner
     {
-        public StockKeepingUnit ScanBarcode(string item, string price, string specialQuantity, string specialPrice)
+        public static StockKeepingUnit ScanBarcode(string item, string price, string specialQuantity, string specialPrice)
         {
             try
             {
-                return new StockKeepingUnit(item, Convert.ToDecimal(price), Convert.ToInt32(specialQuantity), Convert.ToDecimal(specialPrice));
+                int? parsedSpecialQuantity = Int32.TryParse(specialQuantity, out var tempSpecialQuantityVal) ? tempSpecialQuantityVal : (int?)null;
+                decimal? parsedSpecialPrice = decimal.TryParse(specialPrice, out var tempSpecialPriceVal) ? tempSpecialPriceVal : (decimal?)null;
+
+                return new StockKeepingUnit(item, Convert.ToDecimal(price), parsedSpecialQuantity, parsedSpecialPrice);
             }
             catch
             {
-                return null;
+                throw new Exception("Error scanning barcode details.");
             }
         }
     }

@@ -50,6 +50,10 @@
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.colItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpecialQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpecialPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).BeginInit();
             this.pnlLoadCsv.SuspendLayout();
             this.pnlScanItem.SuspendLayout();
@@ -80,10 +84,18 @@
             // 
             // dgvItemList
             // 
+            this.dgvItemList.AccessibleRole = System.Windows.Forms.AccessibleRole.ScrollBar;
+            this.dgvItemList.AllowUserToAddRows = false;
             this.dgvItemList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItemList.Location = new System.Drawing.Point(14, 37);
+            this.dgvItemList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colItem,
+            this.colPrice,
+            this.colSpecialQuantity,
+            this.colSpecialPrice});
+            this.dgvItemList.Location = new System.Drawing.Point(15, 37);
             this.dgvItemList.Name = "dgvItemList";
-            this.dgvItemList.Size = new System.Drawing.Size(402, 163);
+            this.dgvItemList.RowHeadersVisible = false;
+            this.dgvItemList.Size = new System.Drawing.Size(401, 163);
             this.dgvItemList.TabIndex = 2;
             // 
             // txtItem
@@ -102,14 +114,14 @@
             // 
             // txtSpecialQuantity
             // 
-            this.txtSpecialQuantity.Location = new System.Drawing.Point(161, 58);
+            this.txtSpecialQuantity.Location = new System.Drawing.Point(167, 58);
             this.txtSpecialQuantity.Name = "txtSpecialQuantity";
             this.txtSpecialQuantity.Size = new System.Drawing.Size(44, 20);
             this.txtSpecialQuantity.TabIndex = 5;
             // 
             // txtSpecialPrice
             // 
-            this.txtSpecialPrice.Location = new System.Drawing.Point(249, 58);
+            this.txtSpecialPrice.Location = new System.Drawing.Point(255, 58);
             this.txtSpecialPrice.Name = "txtSpecialPrice";
             this.txtSpecialPrice.Size = new System.Drawing.Size(44, 20);
             this.txtSpecialPrice.TabIndex = 6;
@@ -126,16 +138,16 @@
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(88, 42);
+            this.lblPrice.Location = new System.Drawing.Point(85, 42);
             this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(31, 13);
+            this.lblPrice.Size = new System.Drawing.Size(70, 13);
             this.lblPrice.TabIndex = 8;
-            this.lblPrice.Text = "Price";
+            this.lblPrice.Text = "Price (pence)";
             // 
             // lblSpecialQuantity
             // 
             this.lblSpecialQuantity.AutoSize = true;
-            this.lblSpecialQuantity.Location = new System.Drawing.Point(158, 42);
+            this.lblSpecialQuantity.Location = new System.Drawing.Point(161, 42);
             this.lblSpecialQuantity.Name = "lblSpecialQuantity";
             this.lblSpecialQuantity.Size = new System.Drawing.Size(82, 13);
             this.lblSpecialQuantity.TabIndex = 9;
@@ -144,7 +156,7 @@
             // lblSpecialPrice
             // 
             this.lblSpecialPrice.AutoSize = true;
-            this.lblSpecialPrice.Location = new System.Drawing.Point(246, 42);
+            this.lblSpecialPrice.Location = new System.Drawing.Point(249, 42);
             this.lblSpecialPrice.Name = "lblSpecialPrice";
             this.lblSpecialPrice.Size = new System.Drawing.Size(68, 13);
             this.lblSpecialPrice.TabIndex = 10;
@@ -176,6 +188,7 @@
             this.btnScan.TabIndex = 13;
             this.btnScan.Text = "Scan item";
             this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
             // pnlLoadCsv
             // 
@@ -237,6 +250,7 @@
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(71, 20);
             this.txtTotal.TabIndex = 19;
+            this.txtTotal.Text = "0.00";
             // 
             // btnReset
             // 
@@ -246,6 +260,7 @@
             this.btnReset.TabIndex = 20;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // panel1
             // 
@@ -257,6 +272,29 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(228, 84);
             this.panel1.TabIndex = 21;
+            // 
+            // colItem
+            // 
+            this.colItem.HeaderText = "Item";
+            this.colItem.Name = "colItem";
+            this.colItem.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            this.colPrice.HeaderText = "Price (£)";
+            this.colPrice.Name = "colPrice";
+            this.colPrice.ReadOnly = true;
+            // 
+            // colSpecialQuantity
+            // 
+            this.colSpecialQuantity.HeaderText = "Special quantity";
+            this.colSpecialQuantity.Name = "colSpecialQuantity";
+            // 
+            // colSpecialPrice
+            // 
+            this.colSpecialPrice.HeaderText = "Special price (£)";
+            this.colSpecialPrice.Name = "colSpecialPrice";
+            this.colSpecialPrice.ReadOnly = true;
             // 
             // frmCheckoutChallenge
             // 
@@ -307,6 +345,10 @@
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSpecialQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSpecialPrice;
     }
 }
 

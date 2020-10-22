@@ -11,7 +11,7 @@ namespace CheckoutChallenge
         public StockKeepingUnit(string item, decimal pricePence, int? specialQuantity, decimal? specialPricePence)
         {
             Item = item;
-            Price = pricePence / 100m; //TODO - handle = 0 (accept it but don't try and convert)
+            Price = pricePence > 0m ? pricePence / 100m : 0m;
             SpecialQuantity = specialQuantity;
             SpecialPrice = specialPricePence / 100m; //TODO - handle = 0 (don't accept it unless price is also 0)
 
