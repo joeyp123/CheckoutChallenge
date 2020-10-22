@@ -31,6 +31,10 @@
             this.lblChooseCsv = new System.Windows.Forms.Label();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.dgvItemList = new System.Windows.Forms.DataGridView();
+            this.colItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpecialQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpecialPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtItem = new System.Windows.Forms.TextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.txtSpecialQuantity = new System.Windows.Forms.TextBox();
@@ -50,10 +54,6 @@
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.colItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpecialQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpecialPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).BeginInit();
             this.pnlLoadCsv.SuspendLayout();
             this.pnlScanItem.SuspendLayout();
@@ -64,19 +64,18 @@
             // lblChooseCsv
             // 
             this.lblChooseCsv.AutoSize = true;
-            this.lblChooseCsv.Location = new System.Drawing.Point(8, 10);
-            this.lblChooseCsv.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblChooseCsv.Location = new System.Drawing.Point(11, 12);
             this.lblChooseCsv.Name = "lblChooseCsv";
-            this.lblChooseCsv.Size = new System.Drawing.Size(121, 13);
+            this.lblChooseCsv.Size = new System.Drawing.Size(162, 17);
             this.lblChooseCsv.TabIndex = 0;
             this.lblChooseCsv.Text = "Load items from CSV file";
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(11, 36);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBrowse.Location = new System.Drawing.Point(15, 44);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 31);
+            this.btnBrowse.Size = new System.Drawing.Size(100, 38);
             this.btnBrowse.TabIndex = 1;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -86,105 +85,153 @@
             // 
             this.dgvItemList.AccessibleRole = System.Windows.Forms.AccessibleRole.ScrollBar;
             this.dgvItemList.AllowUserToAddRows = false;
+            this.dgvItemList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItemList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvItemList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colItem,
             this.colPrice,
             this.colSpecialQuantity,
             this.colSpecialPrice});
-            this.dgvItemList.Location = new System.Drawing.Point(15, 37);
+            this.dgvItemList.Location = new System.Drawing.Point(20, 46);
+            this.dgvItemList.Margin = new System.Windows.Forms.Padding(4);
             this.dgvItemList.Name = "dgvItemList";
             this.dgvItemList.RowHeadersVisible = false;
-            this.dgvItemList.Size = new System.Drawing.Size(401, 163);
+            this.dgvItemList.RowHeadersWidth = 51;
+            this.dgvItemList.Size = new System.Drawing.Size(535, 201);
             this.dgvItemList.TabIndex = 2;
+            // 
+            // colItem
+            // 
+            this.colItem.DataPropertyName = "Item";
+            this.colItem.HeaderText = "Item";
+            this.colItem.MinimumWidth = 6;
+            this.colItem.Name = "colItem";
+            this.colItem.ReadOnly = true;
+            // 
+            // colPrice
+            // 
+            this.colPrice.DataPropertyName = "Price";
+            this.colPrice.HeaderText = "Price (£)";
+            this.colPrice.MinimumWidth = 6;
+            this.colPrice.Name = "colPrice";
+            this.colPrice.ReadOnly = true;
+            // 
+            // colSpecialQuantity
+            // 
+            this.colSpecialQuantity.DataPropertyName = "SpecialQuantity";
+            this.colSpecialQuantity.HeaderText = "Special quantity";
+            this.colSpecialQuantity.MinimumWidth = 6;
+            this.colSpecialQuantity.Name = "colSpecialQuantity";
+            this.colSpecialQuantity.ReadOnly = true;
+            // 
+            // colSpecialPrice
+            // 
+            this.colSpecialPrice.DataPropertyName = "SpecialPrice";
+            this.colSpecialPrice.HeaderText = "Special price (£)";
+            this.colSpecialPrice.MinimumWidth = 6;
+            this.colSpecialPrice.Name = "colSpecialPrice";
+            this.colSpecialPrice.ReadOnly = true;
             // 
             // txtItem
             // 
-            this.txtItem.Location = new System.Drawing.Point(15, 58);
+            this.txtItem.Location = new System.Drawing.Point(20, 71);
+            this.txtItem.Margin = new System.Windows.Forms.Padding(4);
             this.txtItem.Name = "txtItem";
-            this.txtItem.Size = new System.Drawing.Size(44, 20);
+            this.txtItem.Size = new System.Drawing.Size(57, 22);
             this.txtItem.TabIndex = 3;
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(88, 58);
+            this.txtPrice.Location = new System.Drawing.Point(117, 71);
+            this.txtPrice.Margin = new System.Windows.Forms.Padding(4);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(44, 20);
+            this.txtPrice.Size = new System.Drawing.Size(57, 22);
             this.txtPrice.TabIndex = 4;
             // 
             // txtSpecialQuantity
             // 
-            this.txtSpecialQuantity.Location = new System.Drawing.Point(167, 58);
+            this.txtSpecialQuantity.Location = new System.Drawing.Point(223, 71);
+            this.txtSpecialQuantity.Margin = new System.Windows.Forms.Padding(4);
             this.txtSpecialQuantity.Name = "txtSpecialQuantity";
-            this.txtSpecialQuantity.Size = new System.Drawing.Size(44, 20);
+            this.txtSpecialQuantity.Size = new System.Drawing.Size(57, 22);
             this.txtSpecialQuantity.TabIndex = 5;
             // 
             // txtSpecialPrice
             // 
-            this.txtSpecialPrice.Location = new System.Drawing.Point(255, 58);
+            this.txtSpecialPrice.Location = new System.Drawing.Point(340, 71);
+            this.txtSpecialPrice.Margin = new System.Windows.Forms.Padding(4);
             this.txtSpecialPrice.Name = "txtSpecialPrice";
-            this.txtSpecialPrice.Size = new System.Drawing.Size(44, 20);
+            this.txtSpecialPrice.Size = new System.Drawing.Size(57, 22);
             this.txtSpecialPrice.TabIndex = 6;
             // 
             // lblItem
             // 
             this.lblItem.AutoSize = true;
-            this.lblItem.Location = new System.Drawing.Point(12, 42);
+            this.lblItem.Location = new System.Drawing.Point(16, 52);
+            this.lblItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblItem.Name = "lblItem";
-            this.lblItem.Size = new System.Drawing.Size(27, 13);
+            this.lblItem.Size = new System.Drawing.Size(34, 17);
             this.lblItem.TabIndex = 7;
             this.lblItem.Text = "Item";
             // 
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(85, 42);
+            this.lblPrice.Location = new System.Drawing.Point(113, 52);
+            this.lblPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(70, 13);
+            this.lblPrice.Size = new System.Drawing.Size(93, 17);
             this.lblPrice.TabIndex = 8;
             this.lblPrice.Text = "Price (pence)";
             // 
             // lblSpecialQuantity
             // 
             this.lblSpecialQuantity.AutoSize = true;
-            this.lblSpecialQuantity.Location = new System.Drawing.Point(161, 42);
+            this.lblSpecialQuantity.Location = new System.Drawing.Point(215, 52);
+            this.lblSpecialQuantity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSpecialQuantity.Name = "lblSpecialQuantity";
-            this.lblSpecialQuantity.Size = new System.Drawing.Size(82, 13);
+            this.lblSpecialQuantity.Size = new System.Drawing.Size(108, 17);
             this.lblSpecialQuantity.TabIndex = 9;
             this.lblSpecialQuantity.Text = "Special quantity";
             // 
             // lblSpecialPrice
             // 
             this.lblSpecialPrice.AutoSize = true;
-            this.lblSpecialPrice.Location = new System.Drawing.Point(249, 42);
+            this.lblSpecialPrice.Location = new System.Drawing.Point(332, 52);
+            this.lblSpecialPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSpecialPrice.Name = "lblSpecialPrice";
-            this.lblSpecialPrice.Size = new System.Drawing.Size(68, 13);
+            this.lblSpecialPrice.Size = new System.Drawing.Size(89, 17);
             this.lblSpecialPrice.TabIndex = 10;
             this.lblSpecialPrice.Text = "Special price";
             // 
             // lblManualScan
             // 
             this.lblManualScan.AutoSize = true;
-            this.lblManualScan.Location = new System.Drawing.Point(12, 15);
+            this.lblManualScan.Location = new System.Drawing.Point(16, 18);
+            this.lblManualScan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblManualScan.Name = "lblManualScan";
-            this.lblManualScan.Size = new System.Drawing.Size(103, 13);
+            this.lblManualScan.Size = new System.Drawing.Size(137, 17);
             this.lblManualScan.TabIndex = 11;
             this.lblManualScan.Text = "Scan items manually";
             // 
             // lblScannedItemsList
             // 
             this.lblScannedItemsList.AutoSize = true;
-            this.lblScannedItemsList.Location = new System.Drawing.Point(11, 12);
+            this.lblScannedItemsList.Location = new System.Drawing.Point(15, 15);
+            this.lblScannedItemsList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScannedItemsList.Name = "lblScannedItemsList";
-            this.lblScannedItemsList.Size = new System.Drawing.Size(77, 13);
+            this.lblScannedItemsList.Size = new System.Drawing.Size(101, 17);
             this.lblScannedItemsList.TabIndex = 12;
             this.lblScannedItemsList.Text = "Scanned items";
             // 
             // btnScan
             // 
-            this.btnScan.Location = new System.Drawing.Point(340, 42);
+            this.btnScan.Location = new System.Drawing.Point(453, 52);
+            this.btnScan.Margin = new System.Windows.Forms.Padding(4);
             this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(76, 36);
+            this.btnScan.Size = new System.Drawing.Size(101, 44);
             this.btnScan.TabIndex = 13;
             this.btnScan.Text = "Scan item";
             this.btnScan.UseVisualStyleBackColor = true;
@@ -194,9 +241,10 @@
             // 
             this.pnlLoadCsv.Controls.Add(this.lblChooseCsv);
             this.pnlLoadCsv.Controls.Add(this.btnBrowse);
-            this.pnlLoadCsv.Location = new System.Drawing.Point(12, 12);
+            this.pnlLoadCsv.Location = new System.Drawing.Point(16, 15);
+            this.pnlLoadCsv.Margin = new System.Windows.Forms.Padding(4);
             this.pnlLoadCsv.Name = "pnlLoadCsv";
-            this.pnlLoadCsv.Size = new System.Drawing.Size(200, 84);
+            this.pnlLoadCsv.Size = new System.Drawing.Size(267, 103);
             this.pnlLoadCsv.TabIndex = 14;
             // 
             // pnlScanItem
@@ -211,52 +259,61 @@
             this.pnlScanItem.Controls.Add(this.lblItem);
             this.pnlScanItem.Controls.Add(this.lblSpecialQuantity);
             this.pnlScanItem.Controls.Add(this.lblPrice);
-            this.pnlScanItem.Location = new System.Drawing.Point(12, 102);
+            this.pnlScanItem.Location = new System.Drawing.Point(16, 126);
+            this.pnlScanItem.Margin = new System.Windows.Forms.Padding(4);
             this.pnlScanItem.Name = "pnlScanItem";
-            this.pnlScanItem.Size = new System.Drawing.Size(434, 99);
+            this.pnlScanItem.Size = new System.Drawing.Size(579, 122);
             this.pnlScanItem.TabIndex = 15;
             // 
             // pnlScannedItems
             // 
+            this.pnlScannedItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlScannedItems.Controls.Add(this.dgvItemList);
             this.pnlScannedItems.Controls.Add(this.lblScannedItemsList);
-            this.pnlScannedItems.Location = new System.Drawing.Point(12, 207);
+            this.pnlScannedItems.Location = new System.Drawing.Point(16, 255);
+            this.pnlScannedItems.Margin = new System.Windows.Forms.Padding(4);
             this.pnlScannedItems.Name = "pnlScannedItems";
-            this.pnlScannedItems.Size = new System.Drawing.Size(434, 214);
+            this.pnlScannedItems.Size = new System.Drawing.Size(579, 263);
             this.pnlScannedItems.TabIndex = 16;
             // 
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(22, 9);
+            this.lblTotal.Location = new System.Drawing.Point(29, 11);
+            this.lblTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(63, 13);
+            this.lblTotal.Size = new System.Drawing.Size(82, 17);
             this.lblTotal.TabIndex = 17;
             this.lblTotal.Text = "Basket total";
             // 
             // lblGbpSign
             // 
             this.lblGbpSign.AutoSize = true;
-            this.lblGbpSign.Location = new System.Drawing.Point(6, 38);
+            this.lblGbpSign.Location = new System.Drawing.Point(8, 47);
+            this.lblGbpSign.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGbpSign.Name = "lblGbpSign";
-            this.lblGbpSign.Size = new System.Drawing.Size(13, 13);
+            this.lblGbpSign.Size = new System.Drawing.Size(16, 17);
             this.lblGbpSign.TabIndex = 18;
             this.lblGbpSign.Text = "£";
             // 
             // txtTotal
             // 
             this.txtTotal.Enabled = false;
-            this.txtTotal.Location = new System.Drawing.Point(25, 35);
+            this.txtTotal.Location = new System.Drawing.Point(33, 43);
+            this.txtTotal.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotal.Name = "txtTotal";
-            this.txtTotal.Size = new System.Drawing.Size(71, 20);
+            this.txtTotal.Size = new System.Drawing.Size(93, 22);
             this.txtTotal.TabIndex = 19;
             this.txtTotal.Text = "0.00";
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(135, 9);
+            this.btnReset.Location = new System.Drawing.Point(180, 11);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 33);
+            this.btnReset.Size = new System.Drawing.Size(100, 41);
             this.btnReset.TabIndex = 20;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -268,44 +325,22 @@
             this.panel1.Controls.Add(this.btnReset);
             this.panel1.Controls.Add(this.lblGbpSign);
             this.panel1.Controls.Add(this.txtTotal);
-            this.panel1.Location = new System.Drawing.Point(218, 12);
+            this.panel1.Location = new System.Drawing.Point(291, 15);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(228, 84);
+            this.panel1.Size = new System.Drawing.Size(304, 103);
             this.panel1.TabIndex = 21;
-            // 
-            // colItem
-            // 
-            this.colItem.HeaderText = "Item";
-            this.colItem.Name = "colItem";
-            this.colItem.ReadOnly = true;
-            // 
-            // colPrice
-            // 
-            this.colPrice.HeaderText = "Price (£)";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.ReadOnly = true;
-            // 
-            // colSpecialQuantity
-            // 
-            this.colSpecialQuantity.HeaderText = "Special quantity";
-            this.colSpecialQuantity.Name = "colSpecialQuantity";
-            // 
-            // colSpecialPrice
-            // 
-            this.colSpecialPrice.HeaderText = "Special price (£)";
-            this.colSpecialPrice.Name = "colSpecialPrice";
-            this.colSpecialPrice.ReadOnly = true;
             // 
             // frmCheckoutChallenge
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 430);
+            this.ClientSize = new System.Drawing.Size(609, 529);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlScannedItems);
             this.Controls.Add(this.pnlScanItem);
             this.Controls.Add(this.pnlLoadCsv);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmCheckoutChallenge";
             this.Text = "Checkout Challenge";
             ((System.ComponentModel.ISupportInitialize)(this.dgvItemList)).EndInit();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,21 @@ namespace CheckoutChallenge
             //TODO - none should be negative
         }
 
+        [DisplayName("Item")]
         public string Item { get; }
+
+        [DisplayName("Price (£)")]
         public decimal Price { get; }
+
+        [DisplayName("Special quantity")]
         public int? SpecialQuantity { get; }
+
+        [DisplayName("Special price")]
         public decimal? SpecialPrice { get; }
+
+        public bool HasValue()
+        {
+            return this.Item != null;
+        }
     }
 }

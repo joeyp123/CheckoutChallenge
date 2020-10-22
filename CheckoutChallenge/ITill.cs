@@ -12,5 +12,6 @@ namespace CheckoutChallenge
         List<StockKeepingUnit> ScannedItems { get; }
 
         bool ScanItem(string item, string price, string specialQuantity, string specialPrice);
+        bool ScanItem(StockKeepingUnit sku);
     }
 }

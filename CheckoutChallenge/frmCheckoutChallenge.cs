@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -31,20 +32,27 @@ namespace CheckoutChallenge
             if(openFile.ShowDialog() == DialogResult.OK)
             {
                 var loadedSKUs = FileHelper.ReadSKUsFromFile(openFile.FileName);
+
+                foreach(var sku in loadedSKUs)
+                {
+                    _till.ScanItem(sku);
+                }
+
+                RefreshControlsData();
             }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             _till = new Till();
-            RefreshControlData();
+            RefreshControlsData();
         }
 
         private void btnScan_Click(object sender, EventArgs e)
         {
             if(_till.ScanItem(txtItem.Text,txtPrice.Text,txtSpecialQuantity.Text,txtSpecialPrice.Text))
             {
-                RefreshControlData();
+                RefreshControlsData();
             }
             else
             {
@@ -55,7 +63,7 @@ namespace CheckoutChallenge
         #endregion
 
         #region Private methods
-        private void RefreshControlData()
+        private void RefreshControlsData()
         {
             txtTotal.Text = _till.Total.ToString();
             LoadReceipt();
@@ -73,27 +81,7 @@ namespace CheckoutChallenge
         private void LoadReceipt()
         {
             dgvItemList.DataSource = null;
-
-            var itemsDataTable = new DataTable();
-            itemsDataTable.Columns.Add("colItem", typeof(string));
-            itemsDataTable.Columns.Add("colPrice", typeof(decimal));
-            itemsDataTable.Columns.Add("colSpecialQuantity", typeof(int));
-            itemsDataTable.Columns.Add("colSpecialPrice", typeof(decimal));
-
-            foreach (var item in _till.ScannedItems)
-            {
-                var row = itemsDataTable.NewRow();
-
-                row[0] = item.Item;
-                row[1] = item.Price;
-
-                if(item.SpecialQuantity.HasValue) { row[2] = item.SpecialQuantity; }
-                if(item.SpecialPrice.HasValue) { row[3] = item.SpecialPrice; }
-
-                itemsDataTable.Rows.Add(row);
-            }
-
-            dgvItemList.DataSource = itemsDataTable;
+            dgvItemList.DataSource = _till.ScannedItems;
         }
 
         #endregion

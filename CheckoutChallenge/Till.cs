@@ -22,7 +22,7 @@ namespace CheckoutChallenge
             {
                 var scannedItem = Scanner.ScanBarcode(item, price, specialQuantity, specialPrice);
 
-                if (scannedItem != null)
+                if (scannedItem.HasValue())
                 {
                     ScannedItems.Add(scannedItem);
 
@@ -37,6 +37,13 @@ namespace CheckoutChallenge
             {
                 return false;
             }
+        }
+
+        public bool ScanItem(StockKeepingUnit sku)
+        {
+            ScannedItems.Add(sku);
+
+            return true;
         }
     }
 }

@@ -12,11 +12,15 @@ namespace CheckoutChallenge
         {
             var skus = new List<StockKeepingUnit>();
 
-            var lines = File.ReadAllLines(fileName).Select(a => a.Split(';'));
-            
-            foreach(var line in lines)
-            {
+            var lines = File.ReadAllLines(fileName).Skip(1);
 
+            foreach (var line in lines)
+            {
+                var lineArray = line.Split(',');
+
+                var sku = Scanner.ScanBarcode(lineArray[0], lineArray[1], lineArray[2], lineArray[3]);
+
+                if (sku.HasValue()) { skus.Add(sku); }
             }
 
             return skus;
