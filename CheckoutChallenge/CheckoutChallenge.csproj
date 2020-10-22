@@ -53,9 +53,13 @@
     <Compile Include="frmCheckoutChallenge.Designer.cs">
       <DependentUpon>frmCheckoutChallenge.cs</DependentUpon>
     </Compile>
+    <Compile Include="IScanner.cs" />
+    <Compile Include="ITill.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scanner.cs" />
     <Compile Include="StockKeepingUnit.cs" />
+    <Compile Include="Till.cs" />
     <EmbeddedResource Include="frmCheckoutChallenge.resx">
       <DependentUpon>frmCheckoutChallenge.cs</DependentUpon>
     </EmbeddedResource>
