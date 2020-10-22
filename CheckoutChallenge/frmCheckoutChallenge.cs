@@ -24,5 +24,6 @@ namespace CheckoutChallenge
                 var loadedSKUs = FileHelper.ReadSKUsFromFile(openFile.FileName);
             }
         }
+
     }
 }
