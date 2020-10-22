@@ -10,6 +10,8 @@ namespace CheckoutChallenge
     {
         internal static List<StockKeepingUnit> ReadSKUsFromFile(string fileName)
         {
+            //TODO - better error handling in here for dodgy data
+
             var skus = new List<StockKeepingUnit>();
 
             var lines = File.ReadAllLines(fileName).Skip(1);

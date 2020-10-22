@@ -16,7 +16,7 @@ namespace CheckoutChallenge
             SpecialQuantity = specialQuantity;
             SpecialPrice = specialPricePence / 100m; //TODO - handle = 0 (don't accept it unless price is also 0)
 
-            //TODO - none should be negative
+            //TODO - handle incorrect values in here
         }
 
         [DisplayName("Item")]
@@ -28,7 +28,7 @@ namespace CheckoutChallenge
         [DisplayName("Special quantity")]
         public int? SpecialQuantity { get; }
 
-        [DisplayName("Special price")]
+        [DisplayName("Special price (£)")]
         public decimal? SpecialPrice { get; }
 
         public bool HasValue()

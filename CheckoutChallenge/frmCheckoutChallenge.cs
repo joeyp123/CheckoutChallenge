@@ -56,8 +56,13 @@ namespace CheckoutChallenge
             }
             else
             {
-                //TODO - handle if the item has not scanned correctly - info on what went wrong?
+                MessageBox.Show("There was an error scanning the product. Please check the values are correct and try again.", "Scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void btnClearItem_Click(object sender, EventArgs e)
+        {
+            ClearManualScanFields();
         }
 
         #endregion

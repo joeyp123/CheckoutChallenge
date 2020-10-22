@@ -8,7 +8,7 @@ namespace CheckoutChallenge
 {
     public class Till : ITill
     {
-        public decimal Total { get => ScannedItems.Sum(sku => sku.Price); }
+        public decimal Total { get => RecalculatePrice(); }
         public List<StockKeepingUnit> ScannedItems { get; }
 
         public Till()
@@ -44,6 +44,13 @@ namespace CheckoutChallenge
             ScannedItems.Add(sku);
 
             return true;
+        }
+
+        private decimal RecalculatePrice()
+        {
+            //TODO - this needs to be clever and apply the multi-buy discounts
+
+            return ScannedItems.Sum(sku => sku.Price);
         }
     }
 }
