@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CheckoutChallenge
@@ -15,6 +8,21 @@ namespace CheckoutChallenge
         public frmCheckoutChallenge()
         {
             InitializeComponent();
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            var openFile = new OpenFileDialog
+            {
+                Multiselect = false,
+                Filter = "|*csv",
+                InitialDirectory = @"C:/"
+            };
+
+            if(openFile.ShowDialog() == DialogResult.OK)
+            {
+                var loadedSKUs = FileHelper.ReadSKUsFromFile(openFile.FileName);
+            }
         }
     }
 }
