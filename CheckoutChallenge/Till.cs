@@ -48,9 +48,44 @@ namespace CheckoutChallenge
 
         private decimal RecalculatePrice()
         {
-            //TODO - this needs to be clever and apply the multi-buy discounts
+            decimal basketTotal = 0.0m;
 
-            return ScannedItems.Sum(sku => sku.Price);
+            var groupedItems = ScannedItems
+                                    .GroupBy(sku => new { sku.Item,sku.Price,sku.SpecialQuantity,sku.SpecialPrice})
+                                    .Select(sku => new {
+                                        StockKeepingUnit = sku.Key,
+                                        Count = sku.Count()
+                                    });
+
+            var itemQuantities = groupedItems.ToDictionary(sku => sku.StockKeepingUnit, sku => sku.Count);
+
+            foreach(var item in itemQuantities)
+            {
+                var sku = item.Key;
+                var quantity = item.Value;
+
+                if(sku.SpecialQuantity.HasValue && sku.SpecialPrice.HasValue)
+                {
+                    decimal? itemTotal = 0.0m;
+
+                    //apply multibuy discount
+                    itemTotal += ((quantity - (quantity % sku.SpecialQuantity)) / sku.SpecialQuantity) * sku.SpecialPrice;
+
+                    //apply normal price for any left over
+                    itemTotal += (quantity % sku.SpecialQuantity) * sku.Price;
+
+                    basketTotal += itemTotal.GetValueOrDefault(0.0m);
+                }
+                else
+                {
+                    basketTotal += sku.Price * quantity;
+                }
+            }
+
+            return basketTotal;
         }
+
+
+
     }
 }

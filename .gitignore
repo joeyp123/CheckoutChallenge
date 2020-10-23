@@ -41,3 +41,20 @@ Thumbs.
 *.cache
 *.FileListAbsolute.txt
 *.resources
+
+**/bin
+**/obj
+**/*.dll
+**/*.exe
+**/.vs
+**/.TMP
+**/packages
+**/*.suo
+**/*.user
+**/[Oo]utput
+**/Data Access
+**/.acignore
+**/[Cc]omponents
+**/[Bb]uild[Ss]cripts
+**/*.pdb
+![Nn]u[Gg]et.exe
