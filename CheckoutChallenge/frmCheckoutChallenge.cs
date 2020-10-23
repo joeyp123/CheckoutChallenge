@@ -18,6 +18,9 @@ namespace CheckoutChallenge
             _till = new Till();
         }
 
+        //TODO - introduce ability to remove items from basket
+        //TODO - show breakdown of savings applied - calls for new Calculator class?
+
         #region Handlers
 
         private void btnBrowse_Click(object sender, EventArgs e)

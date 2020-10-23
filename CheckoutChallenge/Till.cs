@@ -85,7 +85,5 @@ namespace CheckoutChallenge
             return basketTotal;
         }
 
-
-
     }
 }

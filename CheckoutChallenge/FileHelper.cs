@@ -11,6 +11,8 @@ namespace CheckoutChallenge
         internal static List<StockKeepingUnit> ReadSKUsFromFile(string fileName)
         {
             //TODO - better error handling in here for dodgy data
+            //load everything we can or just don't load the file at all?
+            //either way should notify the user
 
             var skus = new List<StockKeepingUnit>();
 
