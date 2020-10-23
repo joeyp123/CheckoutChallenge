@@ -11,7 +11,8 @@ namespace CheckoutChallenge
         decimal Total { get; }
         List<StockKeepingUnit> ScannedItems { get; }
 
-        bool ScanItem(string item, string price, string specialQuantity, string specialPrice);
-        bool ScanItem(StockKeepingUnit sku);
+        bool ScanItem(string item, string price, string specialQuantity, string specialPrice, out string errorMessage);
+        void ScanItems(List<StockKeepingUnit> sku);
+        bool ScanItemsFromFile(string fileName, out string errorMessage);
     }
 }

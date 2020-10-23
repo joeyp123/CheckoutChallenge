@@ -8,26 +8,25 @@ namespace CheckoutChallenge
 {
     public static class FileHelper
     {
-        internal static List<StockKeepingUnit> ReadSKUsFromFile(string fileName)
+        internal static List<string[]> ReadSKUValuesFromFile(string fileName)
         {
-            //TODO - better error handling in here for dodgy data
-            //load everything we can or just don't load the file at all?
-            //either way should notify the user
-
-            var skus = new List<StockKeepingUnit>();
-
-            var lines = File.ReadAllLines(fileName).Skip(1);
-
-            foreach (var line in lines)
+            try
             {
-                var lineArray = line.Split(',');
+                var skuValues = new List<string[]>();
 
-                var sku = Scanner.ScanBarcode(lineArray[0], lineArray[1], lineArray[2], lineArray[3]);
+                var lines = File.ReadAllLines(fileName).Skip(1);
 
-                if (sku.HasValue()) { skus.Add(sku); }
+                foreach (var line in lines)
+                {
+                    skuValues.Add(line.Split(','));
+                }
+
+                return skuValues;
             }
-
-            return skus;
+            catch
+            {
+                throw new Exception("Error parsing file.");
+            }
         }
     }
 }

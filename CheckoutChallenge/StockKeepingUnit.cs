@@ -14,9 +14,7 @@ namespace CheckoutChallenge
             Item = item;
             Price = pricePence > 0m ? pricePence / 100m : 0m;
             SpecialQuantity = specialQuantity;
-            SpecialPrice = specialPricePence / 100m; //TODO - handle = 0 (don't accept it unless price is also 0)
-
-            //TODO - handle incorrect values in here
+            SpecialPrice = specialPricePence / 100m;
         }
 
         [DisplayName("Item")]

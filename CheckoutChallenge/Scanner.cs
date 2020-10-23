@@ -13,18 +13,71 @@ namespace CheckoutChallenge
         {
             try
             {
-                //TODO - if invalid data is entered in the two nullable fields then don't just let the item be scanned
-                //prevents an item being scanned with only part of its data
+                int parsedPrice;
+                int? parsedSpecialQuantity = null;
+                decimal? parsedSpecialPrice = null;
 
-                int? parsedSpecialQuantity = Int32.TryParse(specialQuantity, out var tempSpecialQuantityVal) ? tempSpecialQuantityVal : (int?)null;
-                decimal? parsedSpecialPrice = decimal.TryParse(specialPrice, out var tempSpecialPriceVal) ? tempSpecialPriceVal : (decimal?)null;
+                if (Int32.TryParse(price, out var tempPriceVal))
+                {
+                    if(tempPriceVal > 0)
+                    {
+                        parsedPrice = tempPriceVal;
+                    }
+                    else
+                    {
+                        throw new Exception("Item price should be greater than zero.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error parsing item price.");
+                }
 
-                return new StockKeepingUnit(item, Convert.ToDecimal(price), parsedSpecialQuantity, parsedSpecialPrice);
+                if(!string.IsNullOrEmpty(specialQuantity))
+                {
+                    if (Int32.TryParse(specialQuantity, out var tempSpecialQuantityVal))
+                    {
+                        if (tempSpecialQuantityVal > 0)
+                        {
+                            parsedSpecialQuantity = tempSpecialQuantityVal;
+                        }
+                        else
+                        {
+                            throw new Exception("Special quantity should be greater than zero.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Error parsing special quantity.");
+                    }
+                }
+                
+                if(!string.IsNullOrEmpty(specialPrice))
+                {
+                    if (decimal.TryParse(specialPrice, out var tempSpecialPriceVal))
+                    {
+                        if (tempSpecialPriceVal > 0)
+                        {
+                            parsedSpecialPrice = tempSpecialPriceVal;
+                        }
+                        else
+                        {
+                            throw new Exception("Special price should be greater than zero.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Error parsing special price.");
+                    }
+                }
+
+                return new StockKeepingUnit(item, parsedPrice, parsedSpecialQuantity, parsedSpecialPrice);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("Error scanning barcode details.");
+                throw ex;
             }
         }
+
     }
 }

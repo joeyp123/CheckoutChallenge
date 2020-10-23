@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace CheckoutChallenge
 {
@@ -25,23 +26,35 @@ namespace CheckoutChallenge
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            var openFile = new OpenFileDialog
+            try
             {
-                Multiselect = false,
-                Filter = "|*csv",
-                InitialDirectory = @"C:/"
-            };
-
-            if(openFile.ShowDialog() == DialogResult.OK)
-            {
-                var loadedSKUs = FileHelper.ReadSKUsFromFile(openFile.FileName);
-
-                foreach(var sku in loadedSKUs)
+                var openFile = new OpenFileDialog
                 {
-                    _till.ScanItem(sku);
-                }
+                    Multiselect = false,
+                    Filter = "|*csv",
+                    InitialDirectory = @"C:/"
+                };
 
-                RefreshControlsData();
+                if (openFile.ShowDialog() == DialogResult.OK)
+                {
+                    if (_till.ScanItemsFromFile(openFile.FileName, out string errorMessage))
+                    {
+                        RefreshControlsData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("There was an error scanning one or more items. Any correctly scanned items have not been added to your basket."
+                                        + Environment.NewLine
+                                        + errorMessage
+                                        + Environment.NewLine
+                                        + "Please check all values are correct and try again."
+                                    , "Bulk scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There was an error loading the file.", "File load error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -53,13 +66,18 @@ namespace CheckoutChallenge
 
         private void btnScan_Click(object sender, EventArgs e)
         {
-            if(_till.ScanItem(txtItem.Text,txtPrice.Text,txtSpecialQuantity.Text,txtSpecialPrice.Text))
+            if(_till.ScanItem(txtItem.Text,txtPrice.Text,txtSpecialQuantity.Text,txtSpecialPrice.Text,out string errorMessage))
             {
                 RefreshControlsData();
             }
             else
             {
-                MessageBox.Show("There was an error scanning the product. Please check the values are correct and try again.", "Scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("There was an error scanning the product." 
+                                    + Environment.NewLine
+                                    + errorMessage
+                                    + Environment.NewLine
+                                    + "Please check the values are correct and try again."
+                                , "Scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
