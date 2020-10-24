@@ -36,13 +36,7 @@
             this.colSpecialQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSpecialPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtItem = new System.Windows.Forms.TextBox();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.txtSpecialQuantity = new System.Windows.Forms.TextBox();
-            this.txtSpecialPrice = new System.Windows.Forms.TextBox();
             this.lblItem = new System.Windows.Forms.Label();
-            this.lblPrice = new System.Windows.Forms.Label();
-            this.lblSpecialQuantity = new System.Windows.Forms.Label();
-            this.lblSpecialPrice = new System.Windows.Forms.Label();
             this.lblManualScan = new System.Windows.Forms.Label();
             this.lblScannedItemsList = new System.Windows.Forms.Label();
             this.btnScan = new System.Windows.Forms.Button();
@@ -151,35 +145,11 @@
             // 
             // txtItem
             // 
-            this.txtItem.Location = new System.Drawing.Point(161, 49);
+            this.txtItem.Location = new System.Drawing.Point(83, 49);
             this.txtItem.Margin = new System.Windows.Forms.Padding(4);
             this.txtItem.Name = "txtItem";
             this.txtItem.Size = new System.Drawing.Size(132, 22);
             this.txtItem.TabIndex = 3;
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(161, 98);
-            this.txtPrice.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(132, 22);
-            this.txtPrice.TabIndex = 4;
-            // 
-            // txtSpecialQuantity
-            // 
-            this.txtSpecialQuantity.Location = new System.Drawing.Point(161, 146);
-            this.txtSpecialQuantity.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSpecialQuantity.Name = "txtSpecialQuantity";
-            this.txtSpecialQuantity.Size = new System.Drawing.Size(132, 22);
-            this.txtSpecialQuantity.TabIndex = 5;
-            // 
-            // txtSpecialPrice
-            // 
-            this.txtSpecialPrice.Location = new System.Drawing.Point(161, 196);
-            this.txtSpecialPrice.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSpecialPrice.Name = "txtSpecialPrice";
-            this.txtSpecialPrice.Size = new System.Drawing.Size(132, 22);
-            this.txtSpecialPrice.TabIndex = 6;
             // 
             // lblItem
             // 
@@ -190,36 +160,6 @@
             this.lblItem.Size = new System.Drawing.Size(34, 17);
             this.lblItem.TabIndex = 7;
             this.lblItem.Text = "Item";
-            // 
-            // lblPrice
-            // 
-            this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(17, 98);
-            this.lblPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(62, 17);
-            this.lblPrice.TabIndex = 8;
-            this.lblPrice.Text = "Price (p)";
-            // 
-            // lblSpecialQuantity
-            // 
-            this.lblSpecialQuantity.AutoSize = true;
-            this.lblSpecialQuantity.Location = new System.Drawing.Point(16, 150);
-            this.lblSpecialQuantity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSpecialQuantity.Name = "lblSpecialQuantity";
-            this.lblSpecialQuantity.Size = new System.Drawing.Size(108, 17);
-            this.lblSpecialQuantity.TabIndex = 9;
-            this.lblSpecialQuantity.Text = "Special quantity";
-            // 
-            // lblSpecialPrice
-            // 
-            this.lblSpecialPrice.AutoSize = true;
-            this.lblSpecialPrice.Location = new System.Drawing.Point(19, 196);
-            this.lblSpecialPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSpecialPrice.Name = "lblSpecialPrice";
-            this.lblSpecialPrice.Size = new System.Drawing.Size(111, 17);
-            this.lblSpecialPrice.TabIndex = 10;
-            this.lblSpecialPrice.Text = "Special price (p)";
             // 
             // lblManualScan
             // 
@@ -243,7 +183,7 @@
             // 
             // btnScan
             // 
-            this.btnScan.Location = new System.Drawing.Point(395, 38);
+            this.btnScan.Location = new System.Drawing.Point(432, 18);
             this.btnScan.Margin = new System.Windows.Forms.Padding(4);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(139, 78);
@@ -268,22 +208,16 @@
             this.pnlScanItem.Controls.Add(this.lblManualScan);
             this.pnlScanItem.Controls.Add(this.txtItem);
             this.pnlScanItem.Controls.Add(this.btnScan);
-            this.pnlScanItem.Controls.Add(this.txtPrice);
-            this.pnlScanItem.Controls.Add(this.txtSpecialQuantity);
-            this.pnlScanItem.Controls.Add(this.txtSpecialPrice);
-            this.pnlScanItem.Controls.Add(this.lblSpecialPrice);
             this.pnlScanItem.Controls.Add(this.lblItem);
-            this.pnlScanItem.Controls.Add(this.lblSpecialQuantity);
-            this.pnlScanItem.Controls.Add(this.lblPrice);
             this.pnlScanItem.Location = new System.Drawing.Point(16, 126);
             this.pnlScanItem.Margin = new System.Windows.Forms.Padding(4);
             this.pnlScanItem.Name = "pnlScanItem";
-            this.pnlScanItem.Size = new System.Drawing.Size(587, 234);
+            this.pnlScanItem.Size = new System.Drawing.Size(587, 121);
             this.pnlScanItem.TabIndex = 15;
             // 
             // btnClearItem
             // 
-            this.btnClearItem.Location = new System.Drawing.Point(417, 183);
+            this.btnClearItem.Location = new System.Drawing.Point(282, 39);
             this.btnClearItem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClearItem.Name = "btnClearItem";
             this.btnClearItem.Size = new System.Drawing.Size(93, 42);
@@ -303,10 +237,10 @@
             this.pnlScannedItems.Controls.Add(this.lblDiscountsApplied);
             this.pnlScannedItems.Controls.Add(this.dgvItemList);
             this.pnlScannedItems.Controls.Add(this.lblScannedItemsList);
-            this.pnlScannedItems.Location = new System.Drawing.Point(16, 368);
+            this.pnlScannedItems.Location = new System.Drawing.Point(16, 268);
             this.pnlScannedItems.Margin = new System.Windows.Forms.Padding(4);
             this.pnlScannedItems.Name = "pnlScannedItems";
-            this.pnlScannedItems.Size = new System.Drawing.Size(848, 484);
+            this.pnlScannedItems.Size = new System.Drawing.Size(848, 503);
             this.pnlScannedItems.TabIndex = 16;
             // 
             // txtTotalDiscounts
@@ -348,7 +282,7 @@
             this.dgvDiscountsApplied.RowHeadersVisible = false;
             this.dgvDiscountsApplied.RowHeadersWidth = 51;
             this.dgvDiscountsApplied.RowTemplate.Height = 24;
-            this.dgvDiscountsApplied.Size = new System.Drawing.Size(825, 150);
+            this.dgvDiscountsApplied.Size = new System.Drawing.Size(825, 169);
             this.dgvDiscountsApplied.TabIndex = 15;
             // 
             // colDiscountItem
@@ -471,7 +405,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 898);
+            this.ClientSize = new System.Drawing.Size(878, 784);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlScannedItems);
             this.Controls.Add(this.pnlScanItem);
@@ -499,13 +433,7 @@
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.DataGridView dgvItemList;
         private System.Windows.Forms.TextBox txtItem;
-        private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.TextBox txtSpecialQuantity;
-        private System.Windows.Forms.TextBox txtSpecialPrice;
         private System.Windows.Forms.Label lblItem;
-        private System.Windows.Forms.Label lblPrice;
-        private System.Windows.Forms.Label lblSpecialQuantity;
-        private System.Windows.Forms.Label lblSpecialPrice;
         private System.Windows.Forms.Label lblManualScan;
         private System.Windows.Forms.Label lblScannedItemsList;
         private System.Windows.Forms.Button btnScan;

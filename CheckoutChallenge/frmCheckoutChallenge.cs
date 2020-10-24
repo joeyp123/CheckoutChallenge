@@ -17,6 +17,8 @@ namespace CheckoutChallenge
             InitializeComponent();
 
             _till = new Till();
+
+            SetPanelEnanbledStates();
         }
 
         #region Handlers
@@ -34,19 +36,21 @@ namespace CheckoutChallenge
 
                 if (openFile.ShowDialog() == DialogResult.OK)
                 {
-                    if (_till.ScanItemsFromFile(openFile.FileName, out string errorMessage))
+                    if (_till.LoadMultiBuyDiscountsFromFile(openFile.FileName, out string errorMessage))
                     {
-                        RefreshControlsData();
+                        MessageBox.Show("Multi buy discounts loaded successfully.", "Discounts loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show("There was an error scanning one or more items. Any correctly scanned items have not been added to your basket."
+                        MessageBox.Show("There was an error scanning one or more items. Any correctly scanned items have not been added to your basket. "
                                         + Environment.NewLine
                                         + errorMessage
                                         + Environment.NewLine
-                                        + "Please check all values are correct and try again."
+                                        + " Please check all values are correct and try again."
                                     , "Bulk scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
+
+                    SetPanelEnanbledStates();
                 }
             }
             catch
@@ -63,17 +67,18 @@ namespace CheckoutChallenge
 
         private void btnScan_Click(object sender, EventArgs e)
         {
-            if(_till.ScanItem(txtItem.Text,txtPrice.Text,txtSpecialQuantity.Text,txtSpecialPrice.Text,out string errorMessage))
+            if (string.IsNullOrEmpty(txtItem.Text)) { return; }
+
+            if(_till.ScanItem(txtItem.Text,out string errorMessage))
             {
                 RefreshControlsData();
             }
             else
             {
-                MessageBox.Show("There was an error scanning the product." 
+                MessageBox.Show("There was an error scanning the product. " 
+                                    + Environment.NewLine
                                     + Environment.NewLine
                                     + errorMessage
-                                    + Environment.NewLine
-                                    + "Please check the values are correct and try again."
                                 , "Scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -90,6 +95,7 @@ namespace CheckoutChallenge
         {
             txtTotal.Text = _till.Total.ToString("0.#0");
             txtTotalDiscounts.Text = _till.DiscountsTotal.ToString("0.#0");
+            SetPanelEnanbledStates();
             LoadReceipt();
             LoadDiscountedItems();
             ClearManualScanFields();
@@ -98,9 +104,12 @@ namespace CheckoutChallenge
         private void ClearManualScanFields()
         {
             txtItem.Clear();
-            txtPrice.Clear();
-            txtSpecialQuantity.Clear();
-            txtSpecialPrice.Clear();
+        }
+
+        private void SetPanelEnanbledStates()
+        {
+            pnlScanItem.Enabled = _till.Scanner.HasValue;
+            pnlScannedItems.Enabled = _till.Scanner.HasValue;
         }
 
         private void LoadReceipt()

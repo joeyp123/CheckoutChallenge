@@ -11,18 +11,21 @@ namespace CheckoutChallenge
         public List<StockKeepingUnit> ScannedItems { get; }
         public List<MultiBuyItemData> DiscountsApplied { get => GetAppliedDiscounts(ScannedItems); }
 
+        public Scanner Scanner { get; private set; }
+
         public Till()
         {
             ScannedItems = new List<StockKeepingUnit>();
+            Scanner = new Scanner();
         }
 
-        public bool ScanItem(string item, string price, string specialQuantity, string specialPrice, out string errorMessage)
+        public bool ScanItem(string item, out string errorMessage)
         {
             try
             {
                 errorMessage = string.Empty;
 
-                var scannedItem = Scanner.ScanBarcode(item, price, specialQuantity, specialPrice);
+                var scannedItem = Scanner.ScanItem(item);
 
                 if (scannedItem.HasValue())
                 {
@@ -51,38 +54,15 @@ namespace CheckoutChallenge
             }
         }
 
-        public bool ScanItemsFromFile(string fileName, out string errorMessage)
+        public bool LoadMultiBuyDiscountsFromFile(string fileName, out string errorMessage)
         {
             try
             {
                 errorMessage = string.Empty;
-                var successfullyScannedItems = new List<StockKeepingUnit>();
 
-                var loadedSKUValues = FileHelper.ReadSKUValuesFromFile(fileName);
+                Scanner = new Scanner(fileName);
 
-                foreach (var skuValues in loadedSKUValues)
-                {
-                    var scannedItem = Scanner.ScanBarcode(skuValues[0], skuValues[1], skuValues[2], skuValues[3]);
-
-                    if (scannedItem.HasValue())
-                    {
-                        successfullyScannedItems.Add(scannedItem);
-                    }
-                    else
-                    {
-                        errorMessage = "Error scanning item.";
-                    }
-                }
-
-                if (string.IsNullOrEmpty(errorMessage))
-                {
-                    ScanItems(successfullyScannedItems);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
             catch (Exception ex)
             {
@@ -143,6 +123,5 @@ namespace CheckoutChallenge
 
             return itemQuantities;
         }
-
     }
 }
