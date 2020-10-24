@@ -19,9 +19,6 @@ namespace CheckoutChallenge
             _till = new Till();
         }
 
-        //TODO - introduce ability to remove items from basket
-        //TODO - show breakdown of savings applied - calls for new Calculator class?
-
         #region Handlers
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -94,6 +91,7 @@ namespace CheckoutChallenge
             txtTotal.Text = _till.Total.ToString("0.#0");
             txtTotalDiscounts.Text = _till.DiscountsTotal.ToString("0.#0");
             LoadReceipt();
+            LoadDiscountedItems();
             ClearManualScanFields();
         }
 
@@ -109,6 +107,12 @@ namespace CheckoutChallenge
         {
             dgvItemList.DataSource = null;
             dgvItemList.DataSource = _till.ScannedItems;
+        }
+
+        private void LoadDiscountedItems()
+        {
+            dgvDiscountsApplied.DataSource = null;
+            dgvDiscountsApplied.DataSource = _till.DiscountsApplied;
         }
 
         #endregion

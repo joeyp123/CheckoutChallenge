@@ -114,7 +114,9 @@ namespace CheckoutChallenge
 
             foreach(var item in ItemQuantities())
             {
-                multiBuyItems.Add(new MultiBuyItemData(item.Key, item.Value));
+                var multiBuyItem = new MultiBuyItemData(item.Key, item.Value);
+
+                if (multiBuyItem.HasDiscountApplied()) { multiBuyItems.Add(multiBuyItem); }
             }
 
             return multiBuyItems;

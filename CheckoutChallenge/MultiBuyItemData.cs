@@ -13,6 +13,9 @@ namespace CheckoutChallenge
         [DisplayName("Item")]
         public string Item { get => _sku.Item; }
 
+        [DisplayName("Normal price (£)")]
+        public decimal NormalPrice { get => _sku.Price; }
+
         [DisplayName("Special quantity")]
         public int? SpecialQuantity { get => _sku.SpecialQuantity; }
 
@@ -33,21 +36,26 @@ namespace CheckoutChallenge
             QuantityPurchased = quantityPurchased;
         }
 
+        public bool HasDiscountApplied()
+        {
+            return _sku.SpecialQuantity.HasValue && _sku.SpecialPrice.HasValue && QuantityPurchased >= SpecialQuantity;
+        }
+
         private decimal GetItemTotal()
         {
             decimal? itemTotal = 0.0m;
 
-            if (_sku.SpecialQuantity.HasValue && _sku.SpecialPrice.HasValue)
+            if (SpecialQuantity.HasValue && SpecialPrice.HasValue)
             {
                 //apply multibuy discount
-                itemTotal += ((QuantityPurchased - (QuantityPurchased % _sku.SpecialQuantity)) / _sku.SpecialQuantity) * _sku.SpecialPrice;
+                itemTotal += ((QuantityPurchased - (QuantityPurchased % SpecialQuantity)) / SpecialQuantity) * SpecialPrice;
 
                 //apply normal price for any left over
-                itemTotal += (QuantityPurchased % _sku.SpecialQuantity) * _sku.Price;
+                itemTotal += (QuantityPurchased % SpecialQuantity) * NormalPrice;
             }
             else
             {
-                itemTotal = _sku.Price * QuantityPurchased;
+                itemTotal = QuantityPurchased * NormalPrice;
             }
 
             return itemTotal.GetValueOrDefault(0.0m);

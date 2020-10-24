@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CheckoutChallenge;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,14 +12,18 @@ namespace CheckoutChallengeTests
         [TestMethod]
         public void When_ScanItems_Expect_Correct_Till_Total()
         {
-            int itemPricePence = 100;
+            int itemPricePenceA = 100;
+            var skuA = new StockKeepingUnit("A", itemPricePenceA, null, null);
+
+            int itemPricePenceB = 70;
+            var skuB = new StockKeepingUnit("B", itemPricePenceB, null, null);
 
             var till = new Till();
-            var skus = new List<StockKeepingUnit> { new StockKeepingUnit("A", itemPricePence, null, null) };
+            var skus = new List<StockKeepingUnit> { skuA, skuB };
 
             till.ScanItems(skus);
 
-            Assert.AreEqual(Convert.ToInt32(till.Total * 100), itemPricePence);
+            Assert.AreEqual(Convert.ToInt32(till.Total * 100), itemPricePenceA + itemPricePenceB);
         }
 
         [TestMethod]
@@ -81,6 +86,20 @@ namespace CheckoutChallengeTests
             till.ScanItems(new List<StockKeepingUnit> { sku, sku });
 
             Assert.AreEqual(Convert.ToInt32(till.DiscountsTotal * 100), (2 * itemPricePence) - specialPricePence);
+        }
+
+        [TestMethod]
+        public void When_ScanItems_Expect_Added_To_Till_ScannedItems()
+        {
+            var skuA = new StockKeepingUnit("A", 100, null, null);
+            var skuB = new StockKeepingUnit("B", 70, null, null);
+
+            var till = new Till();
+            var skus = new List<StockKeepingUnit> { skuA,skuB };
+
+            till.ScanItems(skus);
+
+            Assert.IsTrue(skus.All(sku => till.ScannedItems.Contains(sku)));
         }
     }
 }

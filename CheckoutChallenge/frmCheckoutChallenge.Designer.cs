@@ -54,6 +54,7 @@
             this.lblTotalDiscounts = new System.Windows.Forms.Label();
             this.dgvDiscountsApplied = new System.Windows.Forms.DataGridView();
             this.colDiscountItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNormalPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDiscountQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDiscountSpecialQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDiscountSpecialPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -305,7 +306,7 @@
             this.pnlScannedItems.Location = new System.Drawing.Point(16, 368);
             this.pnlScannedItems.Margin = new System.Windows.Forms.Padding(4);
             this.pnlScannedItems.Name = "pnlScannedItems";
-            this.pnlScannedItems.Size = new System.Drawing.Size(848, 508);
+            this.pnlScannedItems.Size = new System.Drawing.Size(848, 484);
             this.pnlScannedItems.TabIndex = 16;
             // 
             // txtTotalDiscounts
@@ -330,11 +331,13 @@
             this.dgvDiscountsApplied.AccessibleRole = System.Windows.Forms.AccessibleRole.ScrollBar;
             this.dgvDiscountsApplied.AllowUserToAddRows = false;
             this.dgvDiscountsApplied.AllowUserToDeleteRows = false;
-            this.dgvDiscountsApplied.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvDiscountsApplied.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDiscountsApplied.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDiscountsApplied.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDiscountItem,
+            this.colNormalPrice,
             this.colDiscountQuantity,
             this.colDiscountSpecialQuantity,
             this.colDiscountSpecialPrice,
@@ -345,19 +348,30 @@
             this.dgvDiscountsApplied.RowHeadersVisible = false;
             this.dgvDiscountsApplied.RowHeadersWidth = 51;
             this.dgvDiscountsApplied.RowTemplate.Height = 24;
-            this.dgvDiscountsApplied.Size = new System.Drawing.Size(825, 162);
+            this.dgvDiscountsApplied.Size = new System.Drawing.Size(825, 150);
             this.dgvDiscountsApplied.TabIndex = 15;
             // 
             // colDiscountItem
             // 
+            this.colDiscountItem.DataPropertyName = "Item";
             this.colDiscountItem.HeaderText = "Item";
             this.colDiscountItem.MinimumWidth = 6;
             this.colDiscountItem.Name = "colDiscountItem";
             this.colDiscountItem.ReadOnly = true;
             this.colDiscountItem.Width = 125;
             // 
+            // colNormalPrice
+            // 
+            this.colNormalPrice.DataPropertyName = "NormalPrice";
+            this.colNormalPrice.HeaderText = "Normal price (£)";
+            this.colNormalPrice.MinimumWidth = 6;
+            this.colNormalPrice.Name = "colNormalPrice";
+            this.colNormalPrice.ReadOnly = true;
+            this.colNormalPrice.Width = 125;
+            // 
             // colDiscountQuantity
             // 
+            this.colDiscountQuantity.DataPropertyName = "QuantityPurchased";
             this.colDiscountQuantity.HeaderText = "Quantity purchased";
             this.colDiscountQuantity.MinimumWidth = 6;
             this.colDiscountQuantity.Name = "colDiscountQuantity";
@@ -366,6 +380,7 @@
             // 
             // colDiscountSpecialQuantity
             // 
+            this.colDiscountSpecialQuantity.DataPropertyName = "SpecialQuantity";
             this.colDiscountSpecialQuantity.HeaderText = "Special quantity";
             this.colDiscountSpecialQuantity.MinimumWidth = 6;
             this.colDiscountSpecialQuantity.Name = "colDiscountSpecialQuantity";
@@ -374,6 +389,7 @@
             // 
             // colDiscountSpecialPrice
             // 
+            this.colDiscountSpecialPrice.DataPropertyName = "SpecialPrice";
             this.colDiscountSpecialPrice.HeaderText = "Special price (£)";
             this.colDiscountSpecialPrice.MinimumWidth = 6;
             this.colDiscountSpecialPrice.Name = "colDiscountSpecialPrice";
@@ -382,6 +398,7 @@
             // 
             // colDiscountItemTotal
             // 
+            this.colDiscountItemTotal.DataPropertyName = "ItemTotal";
             this.colDiscountItemTotal.HeaderText = "Item total (£)";
             this.colDiscountItemTotal.MinimumWidth = 6;
             this.colDiscountItemTotal.Name = "colDiscountItemTotal";
@@ -514,6 +531,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDiscountItemTotal;
         private System.Windows.Forms.TextBox txtTotalDiscounts;
         private System.Windows.Forms.Label lblTotalDiscounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNormalPrice;
     }
 }
 
