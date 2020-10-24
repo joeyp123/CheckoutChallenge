@@ -7,7 +7,9 @@ namespace CheckoutChallenge
     public class Till : ITill
     {
         public decimal Total { get => RecalculatePrice(); }
+        public decimal DiscountsTotal { get => (ScannedItems.Sum(sku => sku.Price) - Total);}
         public List<StockKeepingUnit> ScannedItems { get; }
+        public List<MultiBuyItemData> DiscountsApplied { get => GetAppliedDiscounts(ScannedItems); }
 
         public Till()
         {
@@ -93,6 +95,33 @@ namespace CheckoutChallenge
         {
             decimal basketTotal = 0.0m;
 
+            foreach (var item in ItemQuantities())
+            {
+                var sku = item.Key;
+                var quantity = item.Value;
+
+                var multiBuyData = new MultiBuyItemData(sku, quantity);
+
+                basketTotal += multiBuyData.ItemTotal;
+            }
+
+            return basketTotal;
+        }
+
+        private List<MultiBuyItemData> GetAppliedDiscounts(List<StockKeepingUnit> scannedItems)
+        {
+            var multiBuyItems = new List<MultiBuyItemData>();
+
+            foreach(var item in ItemQuantities())
+            {
+                multiBuyItems.Add(new MultiBuyItemData(item.Key, item.Value));
+            }
+
+            return multiBuyItems;
+        }
+
+        private Dictionary<StockKeepingUnit, int> ItemQuantities()
+        {
             var groupedItems = ScannedItems
                                     .GroupBy(sku => new { sku.Item, sku.Price, sku.SpecialQuantity, sku.SpecialPrice })
                                     .Select(sku => new
@@ -101,32 +130,16 @@ namespace CheckoutChallenge
                                         Count = sku.Count()
                                     });
 
-            var itemQuantities = groupedItems.ToDictionary(sku => sku.StockKeepingUnit, sku => sku.Count);
+            var groupedQuantities = groupedItems.ToDictionary(sku => sku.StockKeepingUnit, sku => sku.Count);
 
-            foreach (var item in itemQuantities)
+            var itemQuantities = new Dictionary<StockKeepingUnit, int>();
+
+            foreach (var item in groupedQuantities)
             {
-                var sku = item.Key;
-                var quantity = item.Value;
-
-                if (sku.SpecialQuantity.HasValue && sku.SpecialPrice.HasValue)
-                {
-                    decimal? itemTotal = 0.0m;
-
-                    //apply multibuy discount
-                    itemTotal += ((quantity - (quantity % sku.SpecialQuantity)) / sku.SpecialQuantity) * sku.SpecialPrice;
-
-                    //apply normal price for any left over
-                    itemTotal += (quantity % sku.SpecialQuantity) * sku.Price;
-
-                    basketTotal += itemTotal.GetValueOrDefault(0.0m);
-                }
-                else
-                {
-                    basketTotal += sku.Price * quantity;
-                }
+                itemQuantities.Add(new StockKeepingUnit(item.Key.Item, item.Key.Price, item.Key.SpecialQuantity, item.Key.SpecialPrice), item.Value);
             }
 
-            return basketTotal;
+            return itemQuantities;
         }
 
     }

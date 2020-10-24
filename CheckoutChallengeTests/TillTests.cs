@@ -67,5 +67,20 @@ namespace CheckoutChallengeTests
 
             Assert.AreEqual(Convert.ToInt32(till.Total * 100), specialPricePence + itemPricePence);
         }
+
+        [TestMethod]
+        public void When_ScanItems_For_Multibuy_Expect_Correct_Till_DiscountTotal()
+        {
+            int itemPricePence = 100;
+            int specialQuantity = 2;
+            int specialPricePence = 150;
+
+            var sku = new StockKeepingUnit("A", itemPricePence, specialQuantity, specialPricePence);
+
+            var till = new Till();
+            till.ScanItems(new List<StockKeepingUnit> { sku, sku });
+
+            Assert.AreEqual(Convert.ToInt32(till.DiscountsTotal * 100), (2 * itemPricePence) - specialPricePence);
+        }
     }
 }

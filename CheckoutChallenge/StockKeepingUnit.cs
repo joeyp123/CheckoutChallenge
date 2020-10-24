@@ -9,14 +9,6 @@ namespace CheckoutChallenge
 {
     public class StockKeepingUnit
     {
-        public StockKeepingUnit(string item, int pricePence, int? specialQuantity, decimal? specialPricePence)
-        {
-            Item = item;
-            Price = pricePence > 0 ? pricePence / 100m : 0m;
-            SpecialQuantity = specialQuantity;
-            SpecialPrice = specialPricePence / 100m;
-        }
-
         [DisplayName("Item")]
         public string Item { get; }
 
@@ -28,6 +20,22 @@ namespace CheckoutChallenge
 
         [DisplayName("Special price (£)")]
         public decimal? SpecialPrice { get; }
+
+        public StockKeepingUnit(string item, int pricePence, int? specialQuantity, int? specialPricePence)
+        {
+            Item = item;
+            Price = pricePence > 0 ? pricePence / 100m : 0m;
+            SpecialQuantity = specialQuantity;
+            SpecialPrice = specialPricePence / 100m;
+        }
+
+        public StockKeepingUnit(string item, decimal price, int? specialQuantity, decimal? specialPrice)
+        {
+            Item = item;
+            Price = price > 0m ? price : 0m;
+            SpecialQuantity = specialQuantity;
+            SpecialPrice = specialPrice;
+        }
 
         public bool HasValue()
         {

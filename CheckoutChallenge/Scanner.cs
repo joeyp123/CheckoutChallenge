@@ -15,7 +15,7 @@ namespace CheckoutChallenge
             {
                 int parsedPrice;
                 int? parsedSpecialQuantity = null;
-                decimal? parsedSpecialPrice = null;
+                int? parsedSpecialPrice = null;
 
                 if (Int32.TryParse(price, out var tempPriceVal))
                 {
@@ -54,7 +54,7 @@ namespace CheckoutChallenge
                 
                 if(!string.IsNullOrEmpty(specialPrice))
                 {
-                    if (decimal.TryParse(specialPrice, out var tempSpecialPriceVal))
+                    if (Int32.TryParse(specialPrice, out var tempSpecialPriceVal))
                     {
                         if (tempSpecialPriceVal > 0)
                         {
