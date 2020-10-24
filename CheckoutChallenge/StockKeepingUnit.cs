@@ -9,10 +9,10 @@ namespace CheckoutChallenge
 {
     public class StockKeepingUnit
     {
-        public StockKeepingUnit(string item, decimal pricePence, int? specialQuantity, decimal? specialPricePence)
+        public StockKeepingUnit(string item, int pricePence, int? specialQuantity, decimal? specialPricePence)
         {
             Item = item;
-            Price = pricePence > 0m ? pricePence / 100m : 0m;
+            Price = pricePence > 0 ? pricePence / 100m : 0m;
             SpecialQuantity = specialQuantity;
             SpecialPrice = specialPricePence / 100m;
         }

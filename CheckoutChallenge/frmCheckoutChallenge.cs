@@ -91,7 +91,7 @@ namespace CheckoutChallenge
         #region Private methods
         private void RefreshControlsData()
         {
-            txtTotal.Text = _till.Total.ToString();
+            txtTotal.Text = _till.Total.ToString("#.##");
             LoadReceipt();
             ClearManualScanFields();
         }
