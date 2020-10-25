@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace CheckoutChallenge
+namespace CheckoutChallenge.DataObjects
 {
     public class StockKeepingUnit
     {
@@ -39,7 +34,7 @@ namespace CheckoutChallenge
 
         public bool HasValue()
         {
-            return this.Item != null;
+            return !string.IsNullOrEmpty(this.Item);
         }
     }
 }

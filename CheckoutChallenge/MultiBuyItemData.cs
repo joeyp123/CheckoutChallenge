@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace CheckoutChallenge
+namespace CheckoutChallenge.DataObjects
 {
     public class MultiBuyItemData
     {
@@ -43,22 +37,30 @@ namespace CheckoutChallenge
 
         private decimal GetItemTotal()
         {
-            decimal? itemTotal = 0.0m;
+            decimal itemTotal = 0.0m;
 
             if (SpecialQuantity.HasValue && SpecialPrice.HasValue)
             {
-                //apply multibuy discount
-                itemTotal += ((QuantityPurchased - (QuantityPurchased % SpecialQuantity)) / SpecialQuantity) * SpecialPrice;
+                itemTotal += GetTotalPriceForMultiBuyMultiples(QuantityPurchased, SpecialQuantity.Value, SpecialPrice.Value);
 
-                //apply normal price for any left over
-                itemTotal += (QuantityPurchased % SpecialQuantity) * NormalPrice;
+                itemTotal += GetTotalPriceForRemainingNonMultiBuyItems(QuantityPurchased, SpecialQuantity.Value, NormalPrice);
             }
             else
             {
                 itemTotal = QuantityPurchased * NormalPrice;
             }
 
-            return itemTotal.GetValueOrDefault(0.0m);
+            return itemTotal;
+        }
+
+        private decimal GetTotalPriceForMultiBuyMultiples(int quantityPurchased, int specialQuantity, decimal specialPrice)
+        {
+            return ((quantityPurchased - (quantityPurchased % specialQuantity)) / specialQuantity) * specialPrice;
+        }
+
+        private decimal GetTotalPriceForRemainingNonMultiBuyItems(int quantityPurchased, int specialQuantity, decimal normalPrice)
+        {
+            return (quantityPurchased % specialQuantity) * normalPrice;
         }
     }
 }

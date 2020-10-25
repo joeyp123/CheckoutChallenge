@@ -1,10 +1,7 @@
-﻿using System;
+﻿using CheckoutChallenge.DataObjects;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CheckoutChallenge
+namespace CheckoutChallenge.Interfaces
 {
     public interface ITill
     {
@@ -12,8 +9,7 @@ namespace CheckoutChallenge
         decimal DiscountsTotal { get; }
         List<StockKeepingUnit> ScannedItems { get; }
         List<MultiBuyItemData> DiscountsApplied { get; }
-        bool ScanItem(string item, out string errorMessage);
-        void ScanItems(List<StockKeepingUnit> sku);
+        bool TryScanItem(string item, out string errorMessage);
         bool LoadMultiBuyDiscountsFromFile(string fileName, out string errorMessage);
         Scanner Scanner { get; }
     }

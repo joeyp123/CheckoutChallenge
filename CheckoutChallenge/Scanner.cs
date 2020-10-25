@@ -1,42 +1,36 @@
-﻿using System;
+﻿using CheckoutChallenge.DataObjects;
+using CheckoutChallenge.Extensions;
+using CheckoutChallenge.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 
 namespace CheckoutChallenge
 {
     public class Scanner
     {
-        public bool HasValue { get => _multiBuyDiscounts?.Any() ?? false; }
+        public bool SkusLoaded { get => EnumerableExtensions.NullSafeAny(_multiBuyDiscounts); }
 
         List<StockKeepingUnit> _multiBuyDiscounts;
 
         public Scanner() { }
 
-        public Scanner(string fileName)
+        public bool LoadSkusFromFile(string fileName)
         {
-            try
-            {
-                _multiBuyDiscounts = new List<StockKeepingUnit>();
+            _multiBuyDiscounts = new List<StockKeepingUnit>();
 
-                var loadedSkuValues = FileHelper.ReadSKUValuesFromFile(fileName);
+            var loadedSkuValues = FileHelper.ReadSKUValuesFromFile(fileName);
 
-                LoadSkus(loadedSkuValues);
-
-            }
-            catch(Exception ex)
-            {
-                throw new Exception("There was an error loading the stock keeping units from the file." + ex.Message);
-            }
+            return LoadSkus(loadedSkuValues);
         }
 
         public StockKeepingUnit ScanItem(string item)
         {
-            if (HasValue)
+            if (SkusLoaded)
             {
-                if (_multiBuyDiscounts.Where(sku => sku.Item.ToLower() == item.ToLower()).Any())
+                if (_multiBuyDiscounts.Any(sku => sku.Item.Equals(item, StringComparison.OrdinalIgnoreCase)))
                 {
-                    return _multiBuyDiscounts.Where(sku => sku.Item.ToLower() == item.ToLower()).FirstOrDefault();
+                    return _multiBuyDiscounts.FirstOrDefault(sku => sku.Item.Equals(item, StringComparison.OrdinalIgnoreCase));
                 }
                 else
                 {
@@ -49,29 +43,46 @@ namespace CheckoutChallenge
             }
         }
 
-        private void LoadSkus(List<string[]> loadedSkuValues)
+        public void LoadSkus(List<StockKeepingUnit> skusToLoad)
+        {
+            _multiBuyDiscounts = new List<StockKeepingUnit>();
+
+            _multiBuyDiscounts.AddRange(skusToLoad);
+        }
+
+        private bool LoadSkus(List<string[]> loadedSkuValues)
         {
             try
             {
                 var successfullyScannedSkus = new List<StockKeepingUnit>();
+                bool allSkusLoadedSuccessfully = true;
 
                 foreach (var skuValues in loadedSkuValues)
                 {
-                    var scannedItem = ScanBarcode(skuValues[0], skuValues[1], skuValues[2], skuValues[3]);
+                    try
+                    {
+                        var scannedItem = ScanBarcode(skuValues[0], skuValues[1], skuValues[2], skuValues[3]);
 
-                    if (scannedItem.HasValue())
-                    {
-                        successfullyScannedSkus.Add(scannedItem);
+                        if (scannedItem.HasValue())
+                        {
+                            successfullyScannedSkus.Add(scannedItem);
+                        }
+                        else
+                        {
+                            allSkusLoadedSuccessfully = false;
+                        }
                     }
-                    else
+                    catch
                     {
-                        throw new Exception("Error scanning item.");
+                        allSkusLoadedSuccessfully = false;
                     }
                 }
 
-                if (loadedSkuValues.Any())
+                if (successfullyScannedSkus.Any())
                 {
-                    _multiBuyDiscounts.AddRange(successfullyScannedSkus);
+                    LoadSkus(successfullyScannedSkus);
+
+                    return allSkusLoadedSuccessfully;
                 }
                 else
                 {
@@ -84,74 +95,72 @@ namespace CheckoutChallenge
             }
         }
 
-        private StockKeepingUnit ScanBarcode(string item, string price, string specialQuantity, string specialPrice)
+        public StockKeepingUnit ScanBarcode(string item, string price, string specialQuantity, string specialPrice)
         {
-            try
-            {
-                int parsedPrice;
-                int? parsedSpecialQuantity = null;
-                int? parsedSpecialPrice = null;
+            int parsedPrice;
+            int? parsedSpecialQuantity = null;
+            int? parsedSpecialPrice = null;
 
-                if (Int32.TryParse(price, out var tempPriceVal))
+            if(string.IsNullOrEmpty(item))
+            {
+                throw new Exception("Item name cannot be empty.");
+            }
+
+            if (int.TryParse(price, out var tempPriceVal))
+            {
+                if (tempPriceVal > 0)
                 {
-                    if(tempPriceVal > 0)
+                    parsedPrice = tempPriceVal;
+                }
+                else
+                {
+                    throw new Exception("Item price should be greater than zero.");
+                }
+            }
+            else
+            {
+                throw new Exception("Error parsing item price.");
+            }
+
+            if (!string.IsNullOrEmpty(specialQuantity))
+            {
+                if (int.TryParse(specialQuantity, out var tempSpecialQuantityVal))
+                {
+                    if (tempSpecialQuantityVal > 0)
                     {
-                        parsedPrice = tempPriceVal;
+                        parsedSpecialQuantity = tempSpecialQuantityVal;
                     }
                     else
                     {
-                        throw new Exception("Item price should be greater than zero.");
+                        throw new Exception("Special quantity should be greater than zero.");
                     }
                 }
                 else
                 {
-                    throw new Exception("Error parsing item price.");
+                    throw new Exception("Error parsing special quantity.");
                 }
-
-                if(!string.IsNullOrEmpty(specialQuantity))
-                {
-                    if (Int32.TryParse(specialQuantity, out var tempSpecialQuantityVal))
-                    {
-                        if (tempSpecialQuantityVal > 0)
-                        {
-                            parsedSpecialQuantity = tempSpecialQuantityVal;
-                        }
-                        else
-                        {
-                            throw new Exception("Special quantity should be greater than zero.");
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Error parsing special quantity.");
-                    }
-                }
-                
-                if(!string.IsNullOrEmpty(specialPrice))
-                {
-                    if (Int32.TryParse(specialPrice, out var tempSpecialPriceVal))
-                    {
-                        if (tempSpecialPriceVal > 0)
-                        {
-                            parsedSpecialPrice = tempSpecialPriceVal;
-                        }
-                        else
-                        {
-                            throw new Exception("Special price should be greater than zero.");
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Error parsing special price.");
-                    }
-                }
-
-                return new StockKeepingUnit(item, parsedPrice, parsedSpecialQuantity, parsedSpecialPrice);
             }
-            catch(Exception ex)
+
+            if (!string.IsNullOrEmpty(specialPrice))
             {
-                throw ex;
+                if (int.TryParse(specialPrice, out var tempSpecialPriceVal))
+                {
+                    if (tempSpecialPriceVal > 0)
+                    {
+                        parsedSpecialPrice = tempSpecialPriceVal;
+                    }
+                    else
+                    {
+                        throw new Exception("Special price should be greater than zero.");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Error parsing special price.");
+                }
             }
+
+            return new StockKeepingUnit(item, parsedPrice, parsedSpecialQuantity, parsedSpecialPrice);
         }
     }
 }

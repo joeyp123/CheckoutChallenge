@@ -1,16 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Data;
-using System.IO;
-using System.Linq;
+﻿using CheckoutChallenge.Interfaces;
+using System;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
-namespace CheckoutChallenge
+namespace CheckoutChallenge.Forms
 {
     public partial class frmCheckoutChallenge : Form
     {
         private ITill _till;
+
+        private const string DecimalDisplayFormat = "0.#0";
 
         public frmCheckoutChallenge()
         {
@@ -18,7 +16,7 @@ namespace CheckoutChallenge
 
             _till = new Till();
 
-            SetPanelEnanbledStates();
+            SetPanelEnabledStates();
         }
 
         #region Handlers
@@ -42,15 +40,10 @@ namespace CheckoutChallenge
                     }
                     else
                     {
-                        MessageBox.Show("There was an error scanning one or more items. Any correctly scanned items have not been added to your basket. "
-                                        + Environment.NewLine
-                                        + errorMessage
-                                        + Environment.NewLine
-                                        + " Please check all values are correct and try again."
-                                    , "Bulk scan error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(errorMessage, "Stock keeping unit upload error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
-                    SetPanelEnanbledStates();
+                    SetPanelEnabledStates();
                 }
             }
             catch
@@ -69,7 +62,7 @@ namespace CheckoutChallenge
         {
             if (string.IsNullOrEmpty(txtItem.Text)) { return; }
 
-            if(_till.ScanItem(txtItem.Text,out string errorMessage))
+            if(_till.TryScanItem(txtItem.Text,out string errorMessage))
             {
                 RefreshControlsData();
             }
@@ -93,12 +86,13 @@ namespace CheckoutChallenge
         #region Private methods
         private void RefreshControlsData()
         {
-            txtTotal.Text = _till.Total.ToString("0.#0");
-            txtTotalDiscounts.Text = _till.DiscountsTotal.ToString("0.#0");
-            SetPanelEnanbledStates();
+            txtTotal.Text = _till.Total.ToString(DecimalDisplayFormat);
+            txtTotalDiscounts.Text = _till.DiscountsTotal.ToString(DecimalDisplayFormat);
+            SetPanelEnabledStates();
             LoadReceipt();
             LoadDiscountedItems();
             ClearManualScanFields();
+            FormatMoneyColumns();
         }
 
         private void ClearManualScanFields()
@@ -106,10 +100,10 @@ namespace CheckoutChallenge
             txtItem.Clear();
         }
 
-        private void SetPanelEnanbledStates()
+        private void SetPanelEnabledStates()
         {
-            pnlScanItem.Enabled = _till.Scanner.HasValue;
-            pnlScannedItems.Enabled = _till.Scanner.HasValue;
+            pnlScanItem.Enabled = _till.Scanner.SkusLoaded;
+            pnlScannedItems.Enabled = _till.Scanner.SkusLoaded;
         }
 
         private void LoadReceipt()
@@ -122,6 +116,15 @@ namespace CheckoutChallenge
         {
             dgvDiscountsApplied.DataSource = null;
             dgvDiscountsApplied.DataSource = _till.DiscountsApplied;
+        }
+
+        private void FormatMoneyColumns()
+        {
+            this.dgvItemList.Columns[1].DefaultCellStyle.Format = DecimalDisplayFormat;
+            this.dgvItemList.Columns[3].DefaultCellStyle.Format = DecimalDisplayFormat;
+            this.dgvDiscountsApplied.Columns[1].DefaultCellStyle.Format = DecimalDisplayFormat;
+            this.dgvDiscountsApplied.Columns[3].DefaultCellStyle.Format = DecimalDisplayFormat;
+            this.dgvDiscountsApplied.Columns[5].DefaultCellStyle.Format = DecimalDisplayFormat;
         }
 
         #endregion

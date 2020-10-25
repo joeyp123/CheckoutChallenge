@@ -1,4 +1,4 @@
-﻿namespace CheckoutChallenge
+﻿namespace CheckoutChallenge.Forms
 {
     partial class frmCheckoutChallenge
     {
@@ -124,6 +124,7 @@
             this.colPrice.Name = "colPrice";
             this.colPrice.ReadOnly = true;
             this.colPrice.Width = 125;
+            this.colPrice.DefaultCellStyle.Format = DecimalDisplayFormat;
             // 
             // colSpecialQuantity
             // 
@@ -142,6 +143,7 @@
             this.colSpecialPrice.Name = "colSpecialPrice";
             this.colSpecialPrice.ReadOnly = true;
             this.colSpecialPrice.Width = 125;
+            this.colSpecialPrice.DefaultCellStyle.Format = DecimalDisplayFormat;
             // 
             // txtItem
             // 
@@ -302,6 +304,7 @@
             this.colNormalPrice.Name = "colNormalPrice";
             this.colNormalPrice.ReadOnly = true;
             this.colNormalPrice.Width = 125;
+            this.colNormalPrice.DefaultCellStyle.Format = DecimalDisplayFormat;
             // 
             // colDiscountQuantity
             // 
@@ -329,6 +332,7 @@
             this.colDiscountSpecialPrice.Name = "colDiscountSpecialPrice";
             this.colDiscountSpecialPrice.ReadOnly = true;
             this.colDiscountSpecialPrice.Width = 125;
+            this.colDiscountSpecialPrice.DefaultCellStyle.Format = DecimalDisplayFormat;
             // 
             // colDiscountItemTotal
             // 
@@ -338,6 +342,7 @@
             this.colDiscountItemTotal.Name = "colDiscountItemTotal";
             this.colDiscountItemTotal.ReadOnly = true;
             this.colDiscountItemTotal.Width = 125;
+            this.colDiscountItemTotal.DefaultCellStyle.Format = DecimalDisplayFormat;
             // 
             // lblDiscountsApplied
             // 
